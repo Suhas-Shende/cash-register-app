@@ -136,7 +136,7 @@
 
       //next button to show the notes amount input box
       buttonnext.addEventListener("click", () => {
-        if (billinput.value > 0) {
+        if (Number(billinput.value) > 0) {
           buttonnext.style.display = "none";
           showthis.style.display = "block";
         } else {
@@ -147,7 +147,7 @@
       //Event Handeler for output for notes
       button.addEventListener("click", function myfunction() {
         getmessage(); //it hides the dislpay block
-        if (billinput.value > 0) {
+        if (Number(billinput.value) > 0) {
           //if(12) true
 
           if (Number(noteinput.value) >= Number(billinput.value)) {
