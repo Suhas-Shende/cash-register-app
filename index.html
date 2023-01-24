@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cash-counter-app</title>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        border: 3px solid red;
+        width: 26rem;
+        margin: 20px auto;
+        text-align: center;
+        padding: 1rem;
+        height: auto;
+        background-color: #fed7aa;
+      }
+
+      input {
+        width: 15rem;
+        height: 30px;
+        display: block;
+        margin: 5px auto;
+      }
+      label {
+        font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+          "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+        font-weight: bold;
+      }
+      span {
+        color: blue;
+      }
+      .notes {
+        color: crimson;
+      }
+      button {
+        padding: 5px;
+        margin: 20px 0;
+      }
+      table {
+        margin: auto;
+        border: 4px solid;
+        border-collapse: collapse;
+      }
+      th {
+        border-right: 2px solid green;
+        border-bottom: 2px solid rgb(128, 0, 119);
+        width: 3rem;
+        background-color: aqua;
+        border-collapse: collapse;
+      }
+      td {
+        border-right: 2px solid green;
+        border-collapse: collapse;
+
+        width: 3rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+        <h1>Cash Register App</h1>
+        <p>Enter the bill amount and cash gven by the customer and know minimum notes to be given to customer</p>
+        <div class="message"></div>
+      <label for="bill">Enter bill Amount</label>
+      <input type="text" placeholder="Enter biil amount" id="billt" />
+
+
+      <label for="note">Enter note Amount</label>
+      <input type="text" placeholder="Enter notes amount" id="notet" />
+      <button id="button">calculate</button>
+    
+    
+      <table>
+        <tr>
+            <th>notes</th>
+          <th>2000</th>
+          <th>500</th>
+          <th>100</th>
+          <th>20</th>
+          <th>10</th>
+          <th>5</th>
+          <th>1</th>
+        </tr>
+        <tr>
+            <th>no of notes</th>
+          <td class="change-0"></td>
+          <td class="change-0"></td>
+          <td class="change-0"></td>
+          <td class="change-0"></td>
+          <td class="change-0"></td>
+          <td class="change-0"></td>
+          <td class="change-0"></td>
+        </tr>
+      </table>
+      
+    </div>
+    <script>
+      const billinput = document.querySelector("#billt");
+      const noteinput = document.querySelector("#notet");
+      const button = document.querySelector("#button");
+      const message=document.querySelector(".message");
+      const returnnotesamount=document.querySelectorAll(".change-0");
+      const notesarray=[2000,500,100,20,10,5,1];
+      button.addEventListener("click", function myfunction(){
+         getmessage();
+        if(billinput.value>0){
+        
+        if( noteinput.value >= billinput.value ){
+            
+             console.log("clicked");
+                
+                       returnamount=noteinput.value-billinput.value;
+                        calculateCash(returnamount);
+               
+        }else{
+            invalidmessage("cash is very low");
+        }
+    }else{
+            console.log("false");
+             invalidmessage("invalid bill amount");
+        }
+      });
+    
+        function calculateCash(returnamount){
+                for(let i=0;i<notesarray.length;i++){
+                    const notesvalue=Math.trunc(returnamount/notesarray[i]);
+                    returnamount%=notesarray[i];
+                    returnnotesamount[i].textContent=notesvalue;
+                }
+        }
+
+      function getmessage(){
+        message.style.display="none";
+      }
+      function invalidmessage(messagedisplay){
+              message.style.display="block";
+              message.textContent=messagedisplay;
+      }
+    
+    </script>
+  </body>
+</html>
