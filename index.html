@@ -9,15 +9,17 @@
       body {
         margin: 0;
         padding: 0;
+        
       }
       .container {
-        border: 3px solid red;
+        border: 3px solid #a1a1aa;
         width: 26rem;
         margin: 20px auto;
         text-align: center;
         padding: 1rem;
         height: auto;
-        background-color: #fed7aa;
+        background-color: #a3a3a3;
+       
       }
 
       input {
@@ -25,6 +27,8 @@
         height: 30px;
         display: block;
         margin: 5px auto;
+        border-radius: 5px;
+        border-color:#bbf7d0;
       }
       label {
         font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
@@ -37,111 +41,153 @@
       .notes {
         color: crimson;
       }
-      button {
-        padding: 5px;
-        margin: 20px 0;
+      #button {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-weight: bold;
+        border: 2px solid rgb(51, 0, 255);
+        border-radius: 30px;
+      }
+      .next {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        font-weight: bold;
+        border: 2px solid rgb(51, 0, 255);
+        border-radius: 30px;
       }
       table {
         margin: auto;
-        border: 4px solid;
+        border: 2px solid black;
         border-collapse: collapse;
       }
       th {
-        border-right: 2px solid green;
-        border-bottom: 2px solid rgb(128, 0, 119);
+        border: 2px solid black;
+       
         width: 3rem;
-        background-color: aqua;
+        background-color: #5eead4;
         border-collapse: collapse;
       }
       td {
-        border-right: 2px solid green;
+        border: 2px solid black;
         border-collapse: collapse;
 
         width: 3rem;
+      }
+      .message {
+        color: red;
+      }
+      .showthis {
+        display: none;
       }
     </style>
   </head>
   <body>
     <div class="container">
-        <h1>Cash Register App</h1>
-        <p>Enter the bill amount and cash gven by the customer and know minimum notes to be given to customer</p>
-        <div class="message"></div>
+      <h1>Cash Register App</h1>
+      <p>
+        Enter the bill amount and cash gven by the customer and know minimum
+        notes to be given to customer
+      </p>
+      <div class="message"></div>
       <label for="bill">Enter bill Amount</label>
       <input type="text" placeholder="Enter biil amount" id="billt" />
 
+      <button class="next">Next 👉</button>
 
-      <label for="note">Enter note Amount</label>
-      <input type="text" placeholder="Enter notes amount" id="notet" />
-      <button id="button">calculate</button>
-    
-    
-      <table>
-        <tr>
+      <section class="showthis">
+        <label for="note">Enter note Amount</label>
+        <input type="text" placeholder="Enter notes amount" id="notet" />
+        <button id="button">return cash</button>
+
+        <table>
+          <tr>
             <th>notes</th>
-          <th>2000</th>
-          <th>500</th>
-          <th>100</th>
-          <th>20</th>
-          <th>10</th>
-          <th>5</th>
-          <th>1</th>
-        </tr>
-        <tr>
-            <th>no of notes</th>
-          <td class="change-0"></td>
-          <td class="change-0"></td>
-          <td class="change-0"></td>
-          <td class="change-0"></td>
-          <td class="change-0"></td>
-          <td class="change-0"></td>
-          <td class="change-0"></td>
-        </tr>
-      </table>
-      
+            <th>2000</th>
+            <th>500</th>
+            <th>100</th>
+            <th>20</th>
+            <th>10</th>
+            <th>5</th>
+            <th>1</th>
+          </tr>
+          <tr>
+            <th style="background-color:#475569">no of notes</th>
+            <td class="change-0"></td>
+            <td class="change-0"></td>
+            <td class="change-0"></td>
+            <td class="change-0"></td>
+            <td class="change-0"></td>
+            <td class="change-0"></td>
+            <td class="change-0"></td>
+          </tr>
+        </table>
+      </section>
     </div>
     <script>
+      //All selector are here
       const billinput = document.querySelector("#billt");
       const noteinput = document.querySelector("#notet");
       const button = document.querySelector("#button");
-      const message=document.querySelector(".message");
-      const returnnotesamount=document.querySelectorAll(".change-0");
-      const notesarray=[2000,500,100,20,10,5,1];
-      button.addEventListener("click", function myfunction(){
-         getmessage();
-        if(billinput.value>0){
-        
-        if( noteinput.value >= billinput.value ){
-            
-             console.log("clicked");
-                
-                       returnamount=noteinput.value-billinput.value;
-                        calculateCash(returnamount);
-               
-        }else{
-            invalidmessage("cash is very low");
-        }
-    }else{
-            console.log("false");
-             invalidmessage("invalid bill amount");
+      const buttonnext = document.querySelector(".next");
+      const showthis = document.querySelector(".showthis");
+      const message = document.querySelector(".message");
+      const returnnotesamount = document.querySelectorAll(".change-0");
+      const notesarray = [2000, 500, 100, 20, 10, 5, 1];
+
+      //next button to show the notes amount input box
+      buttonnext.addEventListener("click", () => {
+        if (billinput.value > 0) {
+          buttonnext.style.display = "none";
+          showthis.style.display = "block";
+        } else {
+          invalidmessage("invalid bill amount");
         }
       });
-    
-        function calculateCash(returnamount){
-                for(let i=0;i<notesarray.length;i++){
-                    const notesvalue=Math.trunc(returnamount/notesarray[i]);
-                    returnamount%=notesarray[i];
-                    returnnotesamount[i].textContent=notesvalue;
-                }
-        }
 
-      function getmessage(){
-        message.style.display="none";
+      //Event Handeler for output for notes
+      button.addEventListener("click", function myfunction() {
+        getmessage(); //it hides the dislpay block
+        if (billinput.value > 0) {
+          //if(12) true
+
+          if (noteinput.value >= billinput.value) {
+            //if(200>=12) true
+
+            console.log("clicked");
+
+            returnamount = noteinput.value - billinput.value;
+            calculateCash(returnamount);
+          } else {
+            //if input of note value is less than bill value
+            invalidmessage("cash is very low");
+          }
+        } else {
+          //if bill value is less than 0 minus
+          console.log("false");
+          invalidmessage("invalid bill amount");
+        }
+      });
+
+      //main function to calculate the return the available notes
+      function calculateCash(returnamount) {
+        //for loop to iterate over the loop
+        for (let i = 0; i < notesarray.length; i++) {
+          const notesvalue = Math.trunc(returnamount / notesarray[i]);
+          returnamount %= notesarray[i];
+          returnnotesamount[i].textContent = notesvalue;
+        }
       }
-      function invalidmessage(messagedisplay){
-              message.style.display="block";
-              message.textContent=messagedisplay;
+
+      //these bellow functions for hide and display the block
+      function getmessage() {
+        message.style.display = "none";
       }
-    
+      function invalidmessage(messagedisplay) {
+        message.style.display = "block";
+        message.textContent = messagedisplay;
+      }
     </script>
   </body>
 </html>
